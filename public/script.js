@@ -1,8 +1,3 @@
-/* ══════════════════════════════════════════════
-   NANDHANA ❤ THEJUS — Wedding Script
-   ══════════════════════════════════════════════ */
-
-// ── CURSOR GLOW ──
 const cursorGlow = document.getElementById('cursor-glow');
 document.addEventListener('mousemove', e => {
   cursorGlow.style.left = e.clientX + 'px';
@@ -10,25 +5,20 @@ document.addEventListener('mousemove', e => {
 });
 document.addEventListener('mouseleave', () => { cursorGlow.style.opacity = '0'; });
 document.addEventListener('mouseenter', () => { cursorGlow.style.opacity = '1'; });
-
-// ── SCROLL PROGRESS ──
 const scrollProgress = document.getElementById('scroll-progress');
 window.addEventListener('scroll', () => {
   const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
   scrollProgress.style.width = pct + '%';
 });
 
-// ── NAV SCROLL ──
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 80);
 });
 
-// ══════════════ LOADER ══════════════
 const loader = document.getElementById('loader');
 const loaderCanvas = document.getElementById('loaderCanvas');
 const lCtx = loaderCanvas.getContext('2d');
-
 function resizeLoaderCanvas() {
   loaderCanvas.width = window.innerWidth;
   loaderCanvas.height = window.innerHeight;
@@ -77,13 +67,11 @@ window.addEventListener('load', () => {
     loader.classList.add('hidden');
     initMainParticles();
     initReveal();
-    // Start countdown only after loader finishes
     updateCountdown();
     setInterval(updateCountdown, 1000);
   }, 2800);
 });
 
-// ══════════════ MAIN PARTICLE CANVAS ══════════════
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -261,7 +249,6 @@ function animateParticles() {
   requestAnimationFrame(animateParticles);
 }
 
-// ══════════════ INTERSECTION OBSERVER (REVEAL) ══════════════
 function initReveal() {
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -278,18 +265,14 @@ function initReveal() {
   reveals.forEach(el => observer.observe(el));
 }
 
-// ══════════════════════════════════════════════
-//  COUNTDOWN  —  target: 14 February 2033, 00:00 IST
-//  Uses element IDs: #days #hours #minutes #seconds
-// ══════════════════════════════════════════════
-const WEDDING_DATE = new Date('2033-02-14T00:00:00+05:30');
 
+const WEDDING_DATE = new Date('2033-02-14T00:00:00+05:30');
 function animateNumber(el, value) {
   const formatted = String(value).padStart(2, '0');
   if (el.textContent !== formatted) {
     el.textContent = formatted;
     el.classList.remove('tick');
-    void el.offsetWidth; // force reflow so animation restarts
+    void el.offsetWidth;
     el.classList.add('tick');
   }
 }
@@ -299,13 +282,9 @@ function updateCountdown() {
   const hoursEl   = document.getElementById('hours');
   const minutesEl = document.getElementById('minutes');
   const secondsEl = document.getElementById('seconds');
-
-  // Guard: if elements don't exist yet, skip
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
-
   const now      = Date.now();
   const distance = WEDDING_DATE.getTime() - now;
-
   if (distance <= 0) {
     [daysEl, hoursEl, minutesEl, secondsEl].forEach(el => {
       el.textContent = '00';
@@ -324,7 +303,6 @@ function updateCountdown() {
   animateNumber(secondsEl, seconds);
 }
 
-// ══════════════ RSVP FORM ══════════════
 let selectedAttendance = '';
 
 document.querySelectorAll('.attend-btn').forEach(btn => {
@@ -426,7 +404,6 @@ function launchModalCelebration() {
   }
 }
 
-// ══════════════ TOAST ══════════════
 function showToast(msg) {
   const toast = document.createElement('div');
   toast.textContent = msg;
@@ -442,7 +419,6 @@ function showToast(msg) {
   setTimeout(() => toast.remove(), 4000);
 }
 
-// ══════════════ MUSIC TOGGLE ══════════════
 let audioContext = null;
 let musicPlaying = false;
 let oscillators = [];
@@ -457,7 +433,6 @@ function startAmbientTones() {
   masterGain.gain.linearRampToValueAtTime(0.06, audioContext.currentTime + 3);
   masterGain.connect(audioContext.destination);
 
-  // Temple-inspired drone frequencies (Sa, Pa, Ni in Indian classical)
   const freqs = [65.41, 98.00, 130.81, 164.81, 195.00, 261.63];
 
   freqs.forEach((freq, i) => {
@@ -510,7 +485,6 @@ musicBtn.addEventListener('click', () => {
   }
 });
 
-// ══════════════ PARALLAX ══════════════
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const heroCenter = document.querySelector('.hero-center');
@@ -525,7 +499,6 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// ══════════════ GALLERY HOVER ══════════════
 document.querySelectorAll('.gallery-item').forEach(item => {
   item.addEventListener('mouseenter', () => {
     const rect = item.getBoundingClientRect();
@@ -540,7 +513,6 @@ document.querySelectorAll('.gallery-item').forEach(item => {
   });
 });
 
-// ══════════════ SMOOTH NAV LINKS ══════════════
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
@@ -551,7 +523,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-// ══════════════ DIYA PARTICLES ══════════════
 function spawnDiyaEmbers() {
   const diyas = document.querySelectorAll('.diya');
   diyas.forEach(diya => {
@@ -568,8 +539,6 @@ function spawnDiyaEmbers() {
   });
 }
 setInterval(spawnDiyaEmbers, 300);
-
-// ══════════════ HERO NAME SPARKLE ══════════════
 function addNameSparkle() {
   const names = ['nameNandhana', 'nameThejus', 'heroHeart'];
   names.forEach(id => {

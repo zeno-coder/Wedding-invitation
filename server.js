@@ -3,29 +3,14 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
-
 const app = express();
-
 const PORT = process.env.PORT || 3000;
-
 const RSVP_FILE = path.join(__dirname, "rsvp_data.json");
-
 app.use(cors());
-
-app.use(bodyParser.json({
-  limit: "10mb"
-}));
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
+app.use(bodyParser.json({limit: "10mb"}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "public")));
-
-if (!fs.existsSync(RSVP_FILE)) {
-  fs.writeFileSync(RSVP_FILE, JSON.stringify([], null, 2));
-}
-
+if (!fs.existsSync(RSVP_FILE)) {fs.writeFileSync(RSVP_FILE, JSON.stringify([], null, 2));}
 app.get("/health", (req, res) => {
   res.json({
     success: true,
